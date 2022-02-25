@@ -28,7 +28,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/{id}") //GET at http://localhost:XXXX/students/3
+    @GetMapping("/users/{id}")
     public ResponseEntity<User> getStudentPath(@PathVariable(value = "id") int id) {
         User student = userService.getUserBy(id);
 
