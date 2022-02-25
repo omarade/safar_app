@@ -1,0 +1,19 @@
+stages:
+    - build
+    - sonar
+    - test
+
+build:
+    stage: build
+    script: ./safar/gradlew assemble
+
+sonar:
+    stage: sonar
+    script: ./safar/gradlew sonarqube -D "sonar.projectKey=safarTravelApp" -D "sonar.host.url=%SONAR_URL%" -D "sonar.login=%SONAR_LOGIN%"
+
+test:
+    stage: test
+    script: ./safar/gradlew test
+
+after_script:
+    - echo "End CI"
