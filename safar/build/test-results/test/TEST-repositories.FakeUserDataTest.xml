@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="repositories.FakeUserDataTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-04T00:53:17" hostname="DESKTOP-7NHN6KJ" time="0.014">
+<testsuite name="repositories.FakeUserDataTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-07T09:43:29" hostname="DESKTOP-7NHN6KJ" time="0.026">
   <properties/>
-  <testcase name="getUserById()" classname="repositories.FakeUserDataTest" time="0.014"/>
+  <testcase name="getUserById()" classname="repositories.FakeUserDataTest" time="0.026"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
