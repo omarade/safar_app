@@ -1,5 +1,6 @@
 stages:
     - build
+    - sonar
     - test
 
 build:
@@ -7,6 +8,12 @@ build:
     script:
         - cd safar
         - ./gradlew assemble
+        
+sonar:
+    stage: sonar
+    script:
+        - cd safar
+        - ./gradlew sonarqube -D "sonar.projectKey=safarTravelApp" -D "sonar.host.url=http://localhost:9000" -D "sonar.login=069605e56d35788dfa2af17071dbe6b604810520"
 
 test:
     stage: test

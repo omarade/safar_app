@@ -2,7 +2,7 @@ import UserService from "./services/UserService";
 
 function App() {
 
-  function getStudents(){
+  function getUsers(){
     UserService.getUsers()
     // .then( (res) => {
     //   let users = res.data
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <div className="App">
-        {getStudents()}
+        {getUsers()}
     </div>
   );
 }

@@ -27,4 +27,13 @@ public class FakeSiteData {
     public List<Site> getAllSites(){
         return sites;
     }
+
+    public Site getSiteBy(int id){
+        for (Site site : sites) {
+            if (site.getId() == id) {
+                return site;
+            }
+        }
+        return null;
+    }
 }

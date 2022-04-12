@@ -10,10 +10,17 @@ import java.util.List;
 @Service
 public class SiteService {
 
-    @Autowired
-    public FakeSiteData fakeSiteData;
+    public final FakeSiteData fakeSiteData;
+
+    public SiteService(FakeSiteData fakeSiteData) {
+        this.fakeSiteData = fakeSiteData;
+    }
 
     public List<Site> getAllSites(){
         return fakeSiteData.getAllSites();
+    }
+
+    public Site getSiteBy(int id){
+        return fakeSiteData.getSiteBy(id);
     }
 }

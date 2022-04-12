@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private FakeUserData fakeUserData;
+    private final FakeUserData fakeUserData;
+
+    public UserService(FakeUserData fakeUserData) {
+        this.fakeUserData = fakeUserData;
+    }
 
     public List<User> getAllUsers(){
         return fakeUserData.getUsers();
