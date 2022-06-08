@@ -29,18 +29,18 @@ build frontend:
     image: node:16.15
     script:
         - cd safar-frontend
-        - npm install --global yarn
-        - yarn install
-        - yarn build
+        #- npm install --global yarn
+        - npm install
+        - npm build
 
 test frontend:
     stage: testFrontend
     image: node:16.15
     script:
         - cd safar-frontend
-        - npm install --global yarn
-        - yarn install
-        - yarn test
+        #- npm install --global yarn
+        - npm install
+        - npm test
 
 after_script:
     - echo "End CI"
