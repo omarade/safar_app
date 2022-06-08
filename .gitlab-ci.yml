@@ -32,15 +32,26 @@ build frontend:
         #- npm install --global yarn
         - npm install
         - npm run build
+    artifacts:
+        paths:
+        - build/
 
-test frontend:
-    stage: testFrontend
+# test frontend:
+#     stage: testFrontend
+#     image: node:16.15
+#     script:
+#         - cd safar-frontend
+#         #- npm install --global yarn
+#         - npm install
+#         - npm test
+      
+netlify:
+    stage: deployFrontend
     image: node:16.15
     script:
         - cd safar-frontend
-        #- npm install --global yarn
-        - npm install
-        - npm test
+        - npm install --global netlify-cli
+        - netlify deploy --dir=build --prod
 
 after_script:
     - echo "End CI"
