@@ -52,7 +52,7 @@ netlify:
     script:
         - cd safar-frontend
         - npm install --global netlify-cli
-        - netlify deploy --dir=build --prod
+        - npx netlify deploy --dir=build --prod
 
 after_script:
     - echo "End CI"
