@@ -4,7 +4,7 @@ stages:
     - sonar
     #- test
     - buildFrontend
-    - testFrontend
+    # - testFrontend
 
 build:
     stage: build
