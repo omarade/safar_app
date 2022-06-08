@@ -4,6 +4,7 @@ stages:
     - sonar
     #- test
     - buildFrontend
+    - deployFrontend
     # - testFrontend
 
 build:
