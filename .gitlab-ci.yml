@@ -29,16 +29,16 @@ build frontend:
     image: node:16
     script:
         - cd safar-frontend
-        - ./yarn install
-        - ./yarn build
+        - yarn install
+        - yarn build
 
 test frontend:
     stage: testFrontend
     image: node:16
     script:
         - cd safar-frontend
-        - ./yarn install
-        - ./yarn test
+        - yarn install
+        - yarn test
 
 after_script:
     - echo "End CI"
