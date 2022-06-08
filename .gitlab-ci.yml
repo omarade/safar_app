@@ -1,7 +1,10 @@
+#CI Backend
 stages:
     - build
     - sonar
-    - test
+    #- test
+    - buildFrontend
+    - testFrontend
 
 build:
     stage: build
@@ -15,11 +18,31 @@ sonar:
         - cd safar
         - ./gradlew sonarqube -D "sonar.projectKey=safarTravelApp" -D "sonar.host.url=http://localhost:9000" -D "sonar.login=069605e56d35788dfa2af17071dbe6b604810520"
 
-test:
-    stage: test
+#test:
+#    stage: test
+#    script:
+#        - cd safar
+#        - ./gradlew test
+  
+build frontend:
+    stage: buildFrontend
+    image: node:16
     script:
-        - cd safar
-        - ./gradlew test
+        - cd safar-frontend
+        - ./yarn install
+        - ./yarn build
+
+test frontend:
+    stage: testFrontend
+    image: node:16
+    script:
+        - cd safar-frontend
+        - ./yarn install
+        - ./yarn test
 
 after_script:
     - echo "End CI"
+    
+    
+#CI Frontend
+
