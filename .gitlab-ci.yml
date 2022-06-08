@@ -29,7 +29,7 @@ build frontend:
     image: node:16
     script:
         - cd safar-frontend
-        - npm install -g yarn
+        - npm install --global yarn
         - yarn install
         - yarn build
 
@@ -38,7 +38,7 @@ test frontend:
     image: node:16
     script:
         - cd safar-frontend
-        - npm install -g yarn
+        - npm install --global yarn
         - yarn install
         - yarn test
 
