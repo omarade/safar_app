@@ -1,26 +1,20 @@
 package nl.springboot.safar.services;
 
 import nl.springboot.safar.models.User;
-import nl.springboot.safar.repositories.FakeUserData;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class UserService {
+public interface UserService {
+	public List<User> findAll();
 
-    private final FakeUserData fakeUserData;
+	public Optional<User> findById(Integer id);
 
-    public UserService(FakeUserData fakeUserData) {
-        this.fakeUserData = fakeUserData;
-    }
+	public User save(User user);
 
-    public List<User> getAllUsers(){
-        return fakeUserData.getUsers();
-    }
+	public Optional<User> findByUsername(String username);
 
-    public User getUserBy(int id){
-        return fakeUserData.getUserBy(id);
-    }
+	public Optional<User> findByEmail(String email);
+
+//	public void deleteById(Integer id);
 }

@@ -1,18 +1,18 @@
 package nl.springboot.safar.controllers;
 
 import nl.springboot.safar.models.Site;
+import nl.springboot.safar.models.User;
 import nl.springboot.safar.services.SiteService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@RequestMapping("/sites")
+@CrossOrigin(origins = "http://localhost:3000")
 public class SiteController {
 
     private final SiteService siteService;
@@ -21,10 +21,10 @@ public class SiteController {
         this.siteService = siteService;
     }
 
-    @GetMapping("/sites")
+    @GetMapping("")
     public ResponseEntity<List<Site>> getAllSites() {
         List<Site> sites = null;
-        sites = siteService.getAllSites();
+        sites = siteService.findAll();
 
         if(sites != null) {
             return ResponseEntity.ok().body(sites);
@@ -33,15 +33,22 @@ public class SiteController {
         }
     }
 
-    @GetMapping("/sites/{id}")
-    private ResponseEntity<Site> getSiteBy(@PathVariable int id){
-        Site site = null;
-        site = siteService.getSiteBy(id);
+    @GetMapping("/{id}")
+    private ResponseEntity<Site> getSiteBy(@PathVariable Integer id){
+        Optional<Site> site = null;
+        site = siteService.findById(id);
 
-        if(site != null) {
-            return ResponseEntity.ok().body(site);
+        if(site.isPresent()) {
+            return ResponseEntity.ok().body(site.get());
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping()
+    public ResponseEntity<Site> CreateUser(@RequestBody Site site){
+        siteService.create(site);
+        URI location = URI.create(String.format("/users/" + site.getId()));
+        return ResponseEntity.created(location).build();
     }
 }

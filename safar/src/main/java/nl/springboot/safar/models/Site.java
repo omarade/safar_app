@@ -1,62 +1,62 @@
 package nl.springboot.safar.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+
+import javax.persistence.*;
+
+@Entity(name = "Site") @Table(name = "site")
+@Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class Site {
-    private int id;
-    private String name;
-    private String description;
-    private String address;
 
-    public Site(int id, String name, String description, String address) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.address = address;
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(
+			name = "id",
+			updatable = false
+	)
+	private int id;
 
-    public Site() {
-    }
+	@Column(
+			name = "name",
+			nullable = false,
+			columnDefinition = "TEXT"
+	)
+	private String name;
 
-    public int getId() {
-        return id;
-    }
+	@Column(
+			name = "description",
+			columnDefinition = "TEXT"
+	)
+	private String description;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	@Column(
+			name = "address",
+			nullable = false,
+			columnDefinition = "TEXT"
+	)
+	private String address;
 
-    public String getName() {
-        return name;
-    }
+	@Column(
+			name = "image_path",
+			nullable = false,
+			columnDefinition = "TEXT"
+	)
+	private String imgPath;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	@Column(
+			name = "is_deleted",
+			nullable = false
+	)
+	private boolean isDeleted;
 
-    public String getDescription() {
-        return description;
-    }
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+			CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+	@JoinTable(name = "user_site",
+			joinColumns = {@JoinColumn(name="user_id")} ,
+			inverseJoinColumns = {@JoinColumn(name="site_id")}
+	)
+	@JsonIgnoreProperties(value = {"sites", "hibernateLazyInitializer", "handler"})
+	private City city;
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Site{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

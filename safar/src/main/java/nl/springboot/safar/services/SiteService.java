@@ -1,26 +1,16 @@
 package nl.springboot.safar.services;
 
 import nl.springboot.safar.models.Site;
-import nl.springboot.safar.repositories.FakeSiteData;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
-public class SiteService {
+public interface SiteService {
+	public List<Site> findAll();
 
-    public final FakeSiteData fakeSiteData;
+	public Optional<Site> findById(Integer id);
 
-    public SiteService(FakeSiteData fakeSiteData) {
-        this.fakeSiteData = fakeSiteData;
-    }
+	public Site create(Site site);
 
-    public List<Site> getAllSites(){
-        return fakeSiteData.getAllSites();
-    }
-
-    public Site getSiteBy(int id){
-        return fakeSiteData.getSiteBy(id);
-    }
+//	public void deleteById(Integer id);
 }

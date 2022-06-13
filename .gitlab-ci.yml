@@ -1,24 +1,53 @@
+image: docker:latest
+services:
+    - docker:dind
+
 #CI Backend
 stages:
+    - clean
     - build
     - sonar
     #- test
+    - deploy
     - buildFrontend
     - deployFrontend
     # - testFrontend
+
+clean:
+    stage: clean
+    script:
+        - cd safar
+        - ./gradlew clean
+    artifacts:
+        paths:
+            - build/libs/*.jar
+        
 
 build:
     stage: build
     script:
         - cd safar
         - ./gradlew assemble
+    artifacts:
+        paths:
+            - build/libs/*.jar
         
 sonar:
     stage: sonar
     script:
         - cd safar
         - ./gradlew sonarqube -D "sonar.projectKey=safarTravelApp" -D "sonar.host.url=http://localhost:9000" -D "sonar.login=069605e56d35788dfa2af17071dbe6b604810520"
+    
 
+deploy:
+    stage: deploy
+    script:
+        - cd safar
+        - ./gradlew deploy
+    artifacts:
+        paths:
+            - build/libs/*.jar
+        
 #test:
 #    stage: test
 #    script:

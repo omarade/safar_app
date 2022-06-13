@@ -2,5 +2,5 @@ projectKey=safarTravelApp
 serverUrl=http://localhost:9000
 serverVersion=8.8.0.42792
 dashboardUrl=http://localhost:9000/dashboard?id=safarTravelApp
-ceTaskId=AYAfM11d8vVg4RGqDXfm
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AYAfM11d8vVg4RGqDXfm
+ceTaskId=AYFC9NYdqiodg1qJxZeC
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYFC9NYdqiodg1qJxZeC

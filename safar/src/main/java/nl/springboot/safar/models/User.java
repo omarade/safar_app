@@ -1,69 +1,130 @@
 package nl.springboot.safar.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
+@Entity(name = "Student")
+@Table(name = "user")
+@Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class User {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(
+            name = "id",
+            updatable = false
+    )
+    private Integer id;
+
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String name;
+
+    @Column(
+            name = "address",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     private String address;
+
+    @Column(
+            name = "username",
+            nullable = false,
+            columnDefinition = "TEXT",
+            unique = true
+    )
+    private String username;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "TEXT",
+            unique = true
+    )
     private String email;
 
-    public User(int id, String name, String address, String email) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.email = email;
-    }
+    @Column(
+            name = "password",
+            nullable = false
+    )
+    private String password;
 
-    public User() {
-    }
+    @Column(
+            name = "is_admin",
+            nullable = false
+    )
+    private boolean isAdmin;
 
-    public int getId() {
-        return id;
-    }
+    @Column(
+            name = "is_deleted",
+            nullable = false
+    )
+    private boolean isDeleted;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @ManyToMany(
+            targetEntity = Site.class,
+            cascade = {CascadeType.ALL},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name = "user_site",
+            joinColumns = {@JoinColumn(name="user_id")} ,
+            inverseJoinColumns = {@JoinColumn(name="site_id")}
+    )
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private List<Site> sites;
 
-    public String getName() {
-        return name;
-    }
+//    @Override
+//    public Collection<SimpleGrantedAuthority> getAuthorities() {
+//        String role = "User";
+//        if(this.isAdmin){
+//            role = "Admin";
+//        }
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority(role));
+//        return authorities;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return false;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return false;
+//    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    //    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", address='" + address + '\'' +
+//                ", email='" + email + '\'' +
+//                '}';
+//    }
 }
