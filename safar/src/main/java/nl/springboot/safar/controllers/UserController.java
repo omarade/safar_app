@@ -2,7 +2,6 @@ package nl.springboot.safar.controllers;
 
 import nl.springboot.safar.models.User;
 import nl.springboot.safar.services.UserService;
-import nl.springboot.safar.services.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +16,7 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
