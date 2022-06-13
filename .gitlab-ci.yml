@@ -40,10 +40,11 @@ sonar:
     
 
 deploy:
+    image: gradle:latest
     stage: deploy
     script:
         - cd safar
-        - ./gradlew deploy
+        - gradle deploy
     artifacts:
         paths:
             - build/libs/*.jar
