@@ -9,6 +9,15 @@ import java.util.List;
 @Entity(name = "City") @Table(name = "city")
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class City {
+
+	public City(Integer id, String name, String info, String imgPath, boolean isDeleted) {
+		this.id = id;
+		this.name = name;
+		this.info = info;
+		this.imgPath = imgPath;
+		this.isDeleted = isDeleted;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(

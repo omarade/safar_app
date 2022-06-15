@@ -59,4 +59,12 @@ public class Site {
 	@JsonIgnoreProperties(value = {"sites", "hibernateLazyInitializer", "handler"})
 	private City city;
 
+	public Site(int id, String name, String description, String address, String imgPath, boolean isDeleted) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.address = address;
+		this.imgPath = imgPath;
+		this.isDeleted = isDeleted;
+	}
 }

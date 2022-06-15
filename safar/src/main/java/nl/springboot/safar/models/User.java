@@ -87,7 +87,18 @@ public class User {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Site> sites;
 
-//    @Override
+    public User(Integer id, String name, String address, String username, String email, String password, boolean isAdmin, boolean isDeleted) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.isDeleted = isDeleted;
+    }
+
+    //    @Override
 //    public Collection<SimpleGrantedAuthority> getAuthorities() {
 //        String role = "User";
 //        if(this.isAdmin){

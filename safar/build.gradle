@@ -34,15 +34,30 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
+//    testImplementation group: 'junit', name: 'junit', version: '5.8.1'
 
-    testCompileOnly 'org.projectlombok:lombok:1.18.22'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+//    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+//    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation "org.mockito:mockito-core:3.+"
+
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
-    runtimeOnly 'com.h2database:h2'
+
+
+    //**************
+    testCompileOnly group: 'junit', name: 'junit', version: '4.12'
+
+    testCompileOnly "org.mockito:mockito-core:2.+"
+
+    // https://mincong.io/2020/04/19/mockito-junit5/
+    testCompileOnly group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.28.2'
+
+    implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
 
 //    implementation 'org.hibernate:hibernate-core:5.4.22.Final'
 //    implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
