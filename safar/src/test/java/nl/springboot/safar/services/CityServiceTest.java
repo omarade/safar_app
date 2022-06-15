@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
-@ContextConfiguration
 @ExtendWith(MockitoExtension.class)
 public class CityServiceTest {
 	@InjectMocks
