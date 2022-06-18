@@ -1,0 +1,10 @@
+.card {
+    width: 18rem
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    font-size: x-large;
+    justify-content: right;
+}
