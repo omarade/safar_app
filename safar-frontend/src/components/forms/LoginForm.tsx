@@ -5,9 +5,9 @@ import { TextField } from 'formik-material-ui';
 import { Link } from 'react-router-dom';
 
 import AuthService from '../../services/AuthService.tsx';
-import UserCred from '../../models/dtos/UserCred.tsx'
+import UserCred from '../../models/dtos/UserCred.tsx';
 import { LoginSchema } from '../../validations/LoginValidation.js';
-import '../../styles/Forms.css'
+import '../../styles/Forms.css';
 
 
 // class LoginForm extends React.Component {

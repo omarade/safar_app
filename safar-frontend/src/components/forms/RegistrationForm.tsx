@@ -1,15 +1,14 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, Button, Grid } from '@material-ui/core';
-import { Form, Formik, FormikConfig, FormikValues } from 'formik';
+import { Form, Formik } from 'formik';
 import { Box } from '@material-ui/core';
 import { Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { Link, useNavigate } from 'react-router-dom';
-import { withNavigation } from 'react-navigation'
 
-import UserService from '../../services/UserService.tsx'
+import UserService from '../../services/UserService.tsx';
 import UserCreateDto from '../../models/dtos/UserCreateDto.tsx';
-import {RegistrationSchema} from '../../validations/RegisterValidation.js'
+import {RegistrationSchema} from '../../validations/RegisterValidation.js';
 
 
 // class RegistrationForm extends React.Component {
