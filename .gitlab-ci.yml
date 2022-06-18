@@ -3,11 +3,10 @@ stages:
     - clean
     - build
     - sonar
-    #- test
+    - test
     - deploy
     - buildFrontend
     - deployFrontend
-    # - testFrontend
 
 clean:
     stage: clean
@@ -20,6 +19,12 @@ build:
     script:
         - cd safar
         - ./gradlew assemble
+
+test:
+    stage: test
+    script:
+        - cd safar
+        - ./gradlew test
         
 sonar:
     stage: sonar
@@ -34,11 +39,7 @@ deploy:
         - cd safar
         - ./gradlew bootJar
         
-#test:
-#    stage: test
-#    script:
-#        - cd safar
-#        - ./gradlew test
+
 
 build frontend:
     stage: buildFrontend
