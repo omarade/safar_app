@@ -2,8 +2,8 @@
 stages:
     - clean
     - build
-    - sonar
     - test
+    - sonar  
     - deploy
     - buildFrontend
     - deployFrontend
