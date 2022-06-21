@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final UserDetailsService userDetailsService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final JwtProvider jwtProvider;
 
 	@Bean
 	public CorsFilter corsFilter() {
@@ -44,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+		CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), jwtProvider);
 		customAuthenticationFilter.setFilterProcessesUrl("/authenticate");
 
 		http.cors().and()
@@ -53,8 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
 				.authorizeRequests()
-				.antMatchers("/authenticate/**", "/register").permitAll()
-				.antMatchers(HttpMethod.GET, "/sites").permitAll()
+				.antMatchers("/authenticate/**", "/register", "/refresh-token").permitAll()
+//				.antMatchers(HttpMethod.GET, "/sites").hasAuthority("ROLE_USER")
 				.antMatchers(HttpMethod.DELETE, "/cities/**", "/sites/**", "/users/**").hasAuthority("Admin")
 				.antMatchers(HttpMethod.POST, "/cities/**", "/sites/**").hasAuthority("Admin")
 				.antMatchers(HttpMethod.POST, "/users/**").permitAll()
@@ -62,9 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/users").hasAuthority("Admin")
 				.anyRequest().authenticated();
 //				.exceptionHandling()
-
-//		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 		http.addFilter(customAuthenticationFilter);
+		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+
 
 //		http.csrf().disable();
 //		http.sessionManagement().sessionCreationPolicy(STATELESS);

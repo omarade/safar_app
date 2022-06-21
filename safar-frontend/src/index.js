@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js'
@@ -9,11 +10,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+axios.interceptors.request.use(req => {
+	// console.log("req");
+	// console.log(req);
+	const access_token = localStorage.getItem("access_token")
+	console.log("access_token")
+	console.log(access_token)
+	if(access_token !== null ){
+		req.headers.Authorization = "Bearer " + access_token;
+	}	
+	console.log("req");
+	console.log(req);
+	return req;
+})
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

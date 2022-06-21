@@ -8,7 +8,7 @@ class UserService {
 
 
     getUsers(){
-        console.log(axios.get(USER_BASE_URL))
+        // console.log(axios.get(USER_BASE_URL))
         return axios.get(USER_BASE_URL) 
     }
 

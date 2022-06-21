@@ -52,10 +52,6 @@ public class Site {
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH,
 			CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-	@JoinTable(name = "user_site",
-			joinColumns = {@JoinColumn(name="user_id")} ,
-			inverseJoinColumns = {@JoinColumn(name="site_id")}
-	)
 	@JsonIgnoreProperties(value = {"sites", "hibernateLazyInitializer", "handler"})
 	private City city;
 

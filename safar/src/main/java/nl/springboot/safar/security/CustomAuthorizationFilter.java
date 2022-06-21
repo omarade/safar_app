@@ -29,7 +29,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		if(request.getServletPath().equals("/authenticate") || request.getServletPath().equals("/users/register")){
+		if(request.getServletPath().equals("/authenticate") || request.getServletPath().equals("/users/register") || request.getServletPath().equals("/refresh-token")){
 			filterChain.doFilter(request,response);
 		} else {
 			String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -42,6 +42,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 					DecodedJWT decodedJWT = verifier.verify(token);
 					String username = decodedJWT.getSubject();
 					String role = decodedJWT.getClaim("role").asArray(String.class)[0];
+					log.info("Role is {}", role);
 					Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 					authorities.add(new SimpleGrantedAuthority(role));
 
@@ -52,7 +53,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 				} catch (Exception exception) {
 					log.error("Error signing in: {}", exception.getMessage());
 					response.setHeader("error", exception.getMessage());
-//					response.sendError(FORBIDDEN.value());
+					//response.sendError(FORBIDDEN.value());
 					response.setStatus(FORBIDDEN.value());
 
 					Map<String, String> error = new HashMap<>();

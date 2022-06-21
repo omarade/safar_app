@@ -2,15 +2,12 @@ package nl.springboot.safar.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.Collection;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
+
 import java.util.List;
 
 @Entity(name = "Student")
@@ -26,6 +23,8 @@ public class User {
     )
     private Integer id;
 
+    //letters and spaces only
+    @Pattern(regexp = "^[a-zA-Z\\s]*$")
     @Column(
             name = "name",
             nullable = false,
@@ -33,6 +32,8 @@ public class User {
     )
     private String name;
 
+    //Letters numbers and spaces
+    @Pattern(regexp = "^[A-Za-z0-9\\h@]*$")
     @Column(
             name = "address",
             nullable = false,
@@ -40,6 +41,8 @@ public class User {
     )
     private String address;
 
+    //Letters numbers upper and under-score
+    @Pattern(regexp = "^[A-Za-z0-9_-]*$")
     @Column(
             name = "username",
             nullable = false,
@@ -48,6 +51,7 @@ public class User {
     )
     private String username;
 
+    @Email
     @Column(
             name = "email",
             nullable = false,

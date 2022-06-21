@@ -31,9 +31,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 //@RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private final AuthenticationManager authenticationManager;
+	private final JwtProvider jwtProvider;
 
-	public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public CustomAuthenticationFilter(AuthenticationManager authenticationManager, JwtProvider jwtProvider) {
 		this.authenticationManager = authenticationManager;
+		this.jwtProvider = jwtProvider;
 	}
 
 
@@ -75,24 +77,28 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		UserDetails user = (UserDetails) authentication.getPrincipal();
 		Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
 
-		String accessToken = JWT.create()
-				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
-				.withIssuer(request.getRequestURI().toString())
-				.withClaim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.sign(algorithm);
 
-		String refreshToken = JWT.create()
-				.withSubject(user.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
-				.withIssuer(request.getRequestURI().toString())
-				.withClaim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.sign(algorithm);
+//		String accessToken = JWT.create()
+//				.withSubject(user.getUsername())
+//				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+//				.withIssuer(request.getRequestURI().toString())
+//				.withClaim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+//				.sign(algorithm);
+//
+//		String refreshToken = JWT.create()
+//				.withSubject(user.getUsername())
+//				.withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
+//				.withIssuer(request.getRequestURI().toString())
+//				.withClaim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+//				.sign(algorithm);
 
 //		response.setHeader("access_token", accessToken);
 //		response.setHeader("refresh_token", refreshToken);
+		String accessToken = jwtProvider.generateAccessJWT(request, response, user);
+		String refreshToken = jwtProvider.generateRefreshJWT(request, response, user);
 
 		Map<String, String> tokens = new HashMap<>();
+//		tokens = jwtProvider.generateJWT(request, response, user);
 		tokens.put("access_token", accessToken);
 		tokens.put("refresh_token", refreshToken);
 		response.setContentType(APPLICATION_JSON_VALUE);

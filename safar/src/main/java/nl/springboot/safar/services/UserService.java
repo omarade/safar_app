@@ -1,11 +1,14 @@
 package nl.springboot.safar.services;
 
 import nl.springboot.safar.models.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 	public List<User> findAll();
 
 	public Optional<User> findById(Integer id);
@@ -16,5 +19,8 @@ public interface UserService {
 
 	public Optional<User> findByEmail(String email);
 
-//	public void deleteById(Integer id);
+	@Override
+	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+	//	public void deleteById(Integer id);
 }

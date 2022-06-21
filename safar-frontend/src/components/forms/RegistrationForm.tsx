@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import UserService from '../../services/UserService.tsx';
 import UserCreateDto from '../../models/dtos/UserCreateDto.tsx';
-import {RegistrationSchema} from '../../validations/RegisterValidation.js';
+import { RegistrationSchema } from '../../validations/RegisterValidation.js';
 
 
 // class RegistrationForm extends React.Component {
@@ -24,9 +24,6 @@ const RegistrationForm = () => {
             console.log(res)
 			localStorage.setItem('access_token', res.data.access_token)
 			localStorage.setItem('refresh_token', res.data.refresh_token)
-			// this.navigate("/login");
-			//window.history.pushState({}, "", "/login")
-			// window.location.href = "/login"
 			navigate('/login');
         })
         .catch((error) => {

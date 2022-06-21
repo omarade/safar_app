@@ -1,10 +1,16 @@
-.card {
-    width: 18rem
+.site-card {
+    width: 25rem;
+    margin: 5vh auto 0 auto;
+    /* height: 20vh; */
 }
 
 .icon {
     width: 1em;
     height: 1em;
     font-size: x-large;
-    justify-content: right;
+    float: right;
+}
+
+.site-img {
+    height: 31vh;
 }

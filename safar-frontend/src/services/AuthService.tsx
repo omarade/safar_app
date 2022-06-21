@@ -5,6 +5,7 @@ const AUTH_API_BASE_URL = "http://localhost:8080/authenticate";
 
 class AuthService {
     static async login(userCred: UserCred){
+        console.log(userCred)
         return await axios.post(AUTH_API_BASE_URL, userCred, {headers: {'Content-Type': 'application/json'}})
     }
 }

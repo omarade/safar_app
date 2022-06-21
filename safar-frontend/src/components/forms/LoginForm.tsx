@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardHeader, Button, Grid, Box } from '@material-ui/core';
 import { Form, Formik, Field} from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import AuthService from '../../services/AuthService.tsx';
 import UserCred from '../../models/dtos/UserCred.tsx';
@@ -13,6 +13,8 @@ import '../../styles/Forms.css';
 // class LoginForm extends React.Component {
 const LoginForm = () => {	
 
+	const navigate = useNavigate();
+
 	const onSubmit = (values) => {
 		const userCred = new UserCred(values.username, values.password);
 		AuthService.login(userCred)
@@ -20,6 +22,7 @@ const LoginForm = () => {
             console.log(res)
 			localStorage.setItem('access_token', res.data.access_token)
 			localStorage.setItem('refresh_token', res.data.refresh_token)
+			navigate("/home");
         })
         .catch((error) => {
             // handle error

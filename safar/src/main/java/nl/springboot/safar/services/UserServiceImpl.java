@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service @RequiredArgsConstructor @Log4j2 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             log.info("username {}", user.get().getUsername());
             log.info("password {}", user.get().getPassword());
         }
-        var role = user.get().isAdmin() ? "Admin" : "User";
+        var role = user.get().isAdmin() ? "ROLE_ADMIN" : "ROLE_USER";
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));
         return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
