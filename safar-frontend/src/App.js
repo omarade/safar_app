@@ -3,6 +3,8 @@ import FavoriteSites from './components/FavoriteSites.tsx';
 import LoginForm from "./components/forms/LoginForm.tsx";
 import RegistrationForm from "./components/forms/RegistrationForm.tsx";
 import Home from './components/Home.tsx';
+import SitesOverview from './components/admin/SitesOverview.tsx';
+
 function App() {
 	
 
@@ -20,6 +22,7 @@ function App() {
 				<Route path="/register" element={<RegistrationForm />} />
 				<Route path='/home' element={<Home />} />
 				<Route path='/favorites' element={<FavoriteSites />} />
+				<Route path='/admin' element={<SitesOverview />} />
 
 			</Routes>
 			

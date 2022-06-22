@@ -63,4 +63,13 @@ public class Site {
 		this.imgPath = imgPath;
 		this.isDeleted = isDeleted;
 	}
+
+	public Site(String name, String description, String address, String imgPath, boolean isDeleted, City city) {
+		this.name = name;
+		this.description = description;
+		this.address = address;
+		this.imgPath = imgPath;
+		this.isDeleted = isDeleted;
+		this.city = city;
+	}
 }

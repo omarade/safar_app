@@ -10,6 +10,10 @@ class AuthService {
         console.log(userCred)
         return await axios.post(AUTH_API_BASE_URL, userCred, {headers: {'Content-Type': 'application/json'}})
     }
+
+    static logout() {
+        localStorage.clear();
+    }
     
     static decodeToken() {
         let decodedToken;
@@ -24,6 +28,14 @@ class AuthService {
     static getUsername () {
         let decodeToken = this.decodeToken()
         return decodeToken.sub;
+    }
+
+    static isAdmin () {
+        let decodeToken = this.decodeToken()
+        if (decodeToken.role[0] === "ROLE_ADMIN") {
+            return true;
+        }
+        return false;
     }
 }
 

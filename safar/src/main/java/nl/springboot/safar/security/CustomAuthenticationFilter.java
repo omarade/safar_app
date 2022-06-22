@@ -59,7 +59,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		log.info(authenticationRequest.getUsername());
 
 
-		Authentication authentication = new UsernamePasswordAuthenticationToken(
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 				authenticationRequest.getUsername(),
 				authenticationRequest.getPassword());
 			Authentication authenticate = authenticationManager.authenticate(authentication);
@@ -75,16 +75,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
 		UserDetails user = (UserDetails) authentication.getPrincipal();
-		Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-
-
+//		Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+//
+//
 //		String accessToken = JWT.create()
 //				.withSubject(user.getUsername())
 //				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 //				.withIssuer(request.getRequestURI().toString())
 //				.withClaim("role", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 //				.sign(algorithm);
-//
+
 //		String refreshToken = JWT.create()
 //				.withSubject(user.getUsername())
 //				.withExpiresAt(new Date(System.currentTimeMillis() + 30 * 60 * 1000))
@@ -98,16 +98,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		String refreshToken = jwtProvider.generateRefreshJWT(request, response, user);
 
 		Map<String, String> tokens = new HashMap<>();
-//		tokens = jwtProvider.generateJWT(request, response, user);
 		tokens.put("access_token", accessToken);
 		tokens.put("refresh_token", refreshToken);
 		response.setContentType(APPLICATION_JSON_VALUE);
 		new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 	}
 
-//	@Override
-//	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-//		log.error("Auth failed");
-//		super.unsuccessfulAuthentication(request, response, failed);
-//	}
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+		log.error("Auth failed");
+		super.unsuccessfulAuthentication(request, response, failed);
+	}
 }

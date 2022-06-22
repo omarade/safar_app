@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Integer> {
-	public List<Site> findByCityId(Integer cityId);
+	List<Site> findByCityId(Integer cityId);
+
+	List<Site> findByIsDeleted(boolean isDeleted);
 }

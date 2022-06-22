@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service @RequiredArgsConstructor @Log4j2 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,7 +41,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // if new user
+        if(!findByUsername(user.getUsername()).isPresent()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 

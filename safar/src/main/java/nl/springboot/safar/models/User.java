@@ -102,13 +102,13 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
-    public void addSite(Site site){
-        sites.add(site);
-    }
-
-    public void removeSite(Site site){
-        sites.remove(site);
-    }
+//    public void addSite(Site site){
+//        sites.add(site);
+//    }
+//
+//    public void removeSite(Site site){
+//        sites.remove(site);
+//    }
 
     //    @Override
 //    public Collection<SimpleGrantedAuthority> getAuthorities() {

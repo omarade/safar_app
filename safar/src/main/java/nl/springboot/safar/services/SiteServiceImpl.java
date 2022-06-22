@@ -17,6 +17,10 @@ public class SiteServiceImpl implements SiteService {
         return siteRepository.findAll();
     }
 
+    public List<Site> findByIsDeleted(boolean isDeleted){
+        return siteRepository.findByIsDeleted(isDeleted);
+    }
+
     public Optional<Site> findById(Integer id){
         return siteRepository.findById(id);
     }

@@ -49,19 +49,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		customAuthenticationFilter.setFilterProcessesUrl("/authenticate");
 
 		http.cors().and()
-				.csrf().disable()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.csrf().disable()
+			.sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				.authorizeRequests()
-				.antMatchers("/authenticate", "/register", "/refresh-token").permitAll()
-				.antMatchers(HttpMethod.GET, "/sites", "users/{\\\\d+}/favorites", "users/{\\\\d+}/favorites/{\\\\d+}").hasAuthority("ROLE_USER")
-				.antMatchers(HttpMethod.DELETE, "/cities/**", "/sites/**", "/users/**").hasAuthority("Admin")
-				.antMatchers(HttpMethod.POST, "/cities/**", "/sites/**").hasAuthority("Admin")
-				.antMatchers(HttpMethod.POST, "/users/**").permitAll()
-				.antMatchers(HttpMethod.PUT, "/cities/**", "/sites/**", "/users/**").hasAuthority("Admin")
-				.antMatchers(HttpMethod.GET, "/users").hasAuthority("Admin")
-				.anyRequest().authenticated();
+			.authorizeRequests()
+			.antMatchers("/authenticate/**", "/register", "/refresh-token").permitAll()
+			.antMatchers(HttpMethod.GET, "/sites", "users/{\\\\d+}/favorites", "users/{\\\\d+}/favorites/{\\\\d+}").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+			.antMatchers(HttpMethod.POST, "/cities/**", "/sites/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers(HttpMethod.POST, "/users/**").permitAll()
+			.antMatchers(HttpMethod.PUT, "/cities/**", "/sites/**", "/users/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers(HttpMethod.GET, "/users").hasAuthority("ROLE_ADMIN")
+			.anyRequest().authenticated();
 //				.exceptionHandling()
 		http.addFilter(customAuthenticationFilter);
 		http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

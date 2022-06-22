@@ -1,0 +1,14 @@
+#site_overview {
+    width: 70%;
+    margin: 20px 15%;
+}
+
+
+.site_image {
+    width: 200px;
+}
+
+#btn_add_site {
+    margin: 20px auto;
+    float: right;
+}

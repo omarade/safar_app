@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SiteService {
-	public List<Site> findAll();
+	List<Site> findAll();
 
-	public Optional<Site> findById(Integer id);
+	Optional<Site> findById(Integer id);
 
-	public Site create(Site site);
+	Site create(Site site);
 
-	public List<Site> findByCityId(Integer cityId);
+	List<Site> findByCityId(Integer cityId);
+
+	List<Site> findByIsDeleted(boolean isDeleted);
 
 //	public void deleteById(Integer id);
 }

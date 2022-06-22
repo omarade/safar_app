@@ -10,13 +10,13 @@ import java.util.List;
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 public class City {
 
-	public City(Integer id, String name, String info, String imgPath, boolean isDeleted) {
-		this.id = id;
-		this.name = name;
-		this.info = info;
-		this.imgPath = imgPath;
-		this.isDeleted = isDeleted;
-	}
+//	public City(Integer id, String name, String info, String imgPath, boolean isDeleted) {
+//		this.id = id;
+//		this.name = name;
+//		this.info = info;
+//		this.imgPath = imgPath;
+//		this.isDeleted = isDeleted;
+//	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +54,12 @@ public class City {
 	)
 	private boolean isDeleted;
 
-	@OneToMany(mappedBy = "city",
-			targetEntity = Site.class,
-			cascade = {CascadeType.PERSIST, CascadeType.DETACH,
-					CascadeType.MERGE, CascadeType.REFRESH},
-			fetch = FetchType.LAZY)
-	@JsonIgnoreProperties({"city", "hibernateLazyInitializer", "handler"})
-	private List<Site> sites;
+//	@OneToMany(mappedBy = "city",
+//			targetEntity = Site.class,
+//			cascade = {CascadeType.PERSIST, CascadeType.DETACH,
+//					CascadeType.MERGE, CascadeType.REFRESH},
+//			fetch = FetchType.LAZY
+//	)
+//	@JsonIgnoreProperties({"city", "hibernateLazyInitializer", "handler"})
+//	private List<Site> sites;
 }

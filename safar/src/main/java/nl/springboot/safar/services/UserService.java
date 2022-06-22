@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 	public List<User> findAll();
 
 	public Optional<User> findById(Integer id);
@@ -19,8 +19,10 @@ public interface UserService extends UserDetailsService {
 
 	public Optional<User> findByEmail(String email);
 
-	@Override
-	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+//	@Override
+//	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+
 
 	//	public void deleteById(Integer id);
 }

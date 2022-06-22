@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import nl.springboot.safar.models.City;
 import nl.springboot.safar.models.Site;
 import nl.springboot.safar.models.User;
+import nl.springboot.safar.models.dto.SiteDto;
 import nl.springboot.safar.services.CityService;
 import nl.springboot.safar.services.SiteService;
 import org.springframework.data.repository.query.Param;
@@ -38,7 +39,8 @@ public class SiteController {
                 sites = siteService.findByCityId(cityId);
             }
         } else {
-            sites = siteService.findAll();
+//            sites = siteService.findAll();
+            sites = siteService.findByIsDeleted(false);
         }
 
         if(sites != null) {
@@ -61,10 +63,27 @@ public class SiteController {
     }
 
     @PostMapping()
-    public ResponseEntity<Site> createSite(@RequestBody Site site){
+    public ResponseEntity<Site> createSite(@RequestBody SiteDto siteDto){
+//        	public Site(String name, String description, String address, String imgPath, boolean isDeleted, City city) {
+
+        Optional<City> city = cityService.findById(siteDto.getCityId());
+
+        Site site = new Site(siteDto.getName(), siteDto.getDescription(), siteDto.getAddress(), siteDto.getImgPath(), false, city.get());
+
         siteService.create(site);
-        URI location = URI.create(String.format("/users/" + site.getId()));
+        URI location = URI.create(String.format("/sites/" + site.getId()));
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteSite(@PathVariable(required = true) Integer id) {
+        Optional<Site> site = siteService.findById(id);
+        if(site.isPresent()){
+            site.get().setDeleted(true);
+            siteService.create(site.get());
+
+        }
+        return ResponseEntity.noContent().build();
     }
 
 }
