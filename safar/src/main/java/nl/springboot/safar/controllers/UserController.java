@@ -5,9 +5,13 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nl.springboot.safar.models.Site;
 import nl.springboot.safar.models.User;
+import nl.springboot.safar.models.dto.UserFavoriteSitesDto;
 import nl.springboot.safar.security.JwtProvider;
+import nl.springboot.safar.services.SiteService;
 import nl.springboot.safar.services.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,18 +33,16 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
+    private final SiteService siteService;
     private final JwtProvider jwtProvider;
 
-    public UserController(UserService userService, JwtProvider jwtProvider) {
-        this.userService = userService;
-        this.jwtProvider = jwtProvider;
-    }
 
     @GetMapping("")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -54,15 +56,48 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> GetUser(@PathVariable(value = "id", required = false) int id) {
-        Optional<User> user = userService.findById(id);
+    @GetMapping("/{username}")
+    public ResponseEntity<User> GetUser(@PathVariable(value = "username") String username) {
+        Optional<User> user = userService.findByUsername(username);
 
         if(user.isPresent()) {
             return ResponseEntity.ok().body(user.get());
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/{username}/favorites")
+    public ResponseEntity<UserFavoriteSitesDto> getFavoriteSites(@PathVariable(value = "username") String username){
+        Optional<User> user = userService.findByUsername(username);
+
+        if(user.isPresent()) {
+            UserFavoriteSitesDto userFavoriteSitesDto = new UserFavoriteSitesDto(user.get().getSites());
+            return ResponseEntity.ok().body(userFavoriteSitesDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/{username}/favorites/{siteId}")
+    public ResponseEntity toggleFavoriteSites(@PathVariable(value = "username") String username, @PathVariable(value = "siteId") Integer siteId){
+        Optional<User> user = userService.findByUsername(username);
+        Optional<Site> site = siteService.findById(siteId);
+
+        boolean isFavorite = false;
+        if(site.isPresent()){
+            isFavorite = user.get().getSites().contains(site.get());
+        }
+
+        if (isFavorite) {
+            user.get().removeSite(site.get());
+        } else {
+            user.get().addSite(site.get());
+        }
+
+        userService.save(user.get());
+
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/register")

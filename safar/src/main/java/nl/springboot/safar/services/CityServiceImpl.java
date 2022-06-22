@@ -19,7 +19,11 @@ public class CityServiceImpl implements CityService {
 
 	public Optional<City> findById(Integer id){
 		return cityRepository.findById(id);
-	};
+	}
+
+	public Optional<City> findByName(String name) {
+		return cityRepository.findByName(name);
+	}
 
 	public City create(City city){
 		return cityRepository.save(city);

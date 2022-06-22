@@ -1,11 +1,15 @@
 import React from 'react'
+import UserService from '../../services/UserService.tsx'
 
 import '../../styles/SiteCard.css'
 
 
 const SiteCard = (props) => {
-
-
+    const onToggleFavorite = () => {
+        console.log("toggle favorite");
+        console.log(props.site)
+        props.onToggleFavorite(props.site)
+    }
 
 
     return (
@@ -20,11 +24,13 @@ const SiteCard = (props) => {
                         <p className="card-text">{props.site.address}</p>
                     </div>
                     <div className="col-2">
-                        <i className="icon bi bi-heart"></i>
+                        {props.isFavorite}
+                        <i onClick={() => { onToggleFavorite() }} className={`icon bi ${props.isFavorite ? "bi-heart-fill" : "bi-heart"}`}></i>
                     </div>
                 </div>
             </div>
         </div>
+        //className={`banner ${active ? "active" : ""}`}
        
     )
 }

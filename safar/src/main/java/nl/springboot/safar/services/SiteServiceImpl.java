@@ -24,4 +24,8 @@ public class SiteServiceImpl implements SiteService {
     public Site create(Site site){
        return siteRepository.save(site);
     }
+
+    public List<Site> findByCityId (Integer cityId) {
+        return siteRepository.findByCityId(cityId);
+    }
 }

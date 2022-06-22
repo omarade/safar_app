@@ -10,6 +10,8 @@ public interface CityService {
 
 	public Optional<City> findById(Integer id);
 
+	public Optional<City> findByName(String name);
+
 	public City create(City city);
 
 //	public void deleteById(Integer id);

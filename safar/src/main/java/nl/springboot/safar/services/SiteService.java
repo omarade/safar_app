@@ -12,5 +12,7 @@ public interface SiteService {
 
 	public Site create(Site site);
 
+	public List<Site> findByCityId(Integer cityId);
+
 //	public void deleteById(Integer id);
 }
